@@ -1,0 +1,42 @@
+{% extends 'web_interface/base.html' %}
+{% block content %}
+<h3 class="my-4 text-center"> Список Имён пользователей! </h3>
+<p> Для взаимодествяи CRUD пройдите воспульзуйтесь нашим   <a href="/api/"> API </a> </p>
+    <p> Настоятельно рекомендуеюм ознакомится с документацие й размещённой на <a href="https://www.github.com/AbramtsevFV/service_git_aoi" target="_blank"> GitHub </a> </p></p>
+
+    {% for object in object_list %}
+
+            <div class="card my-3">
+          <h5 class="card-header"><a href="{% url 'repo_list' object.pk%}">{{ object.name }}</a> </h5>
+
+    </div>
+        {% endfor %}
+    <div class="pagination">
+<!-- пагинация-->
+    {% if page_obj.has_other_pages %} <!-- Если страниц больше чем одна -->
+    <ul>
+    {% elif page_obj.has_previous %} <!-- Существует ли предидущая страница -->
+<li class="current"><!--Кнопка на предидущую страницу -->
+	<a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+</li>
+    {% endif %}
+   {% for p in paginator.page_range %}
+		<!--Чтобы текущаяя страница была как текст -->
+		{%if page_obj.number == p %}
+		<li class="current">{{p}}</li>
+		<!--  Условие если р находится в интервале от р-2 до р+2-->
+		<!-- Отображаться будет по 2 ссылки слева и справа -->
+		{% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2  %}
+        <li class="current">
+            <a href="?page={{ p }}">{{ p }}</a>
+        </li>
+		{% endif %}
+        {% endfor %}
+{% if page_obj.has_next %} 	<!-- Проверка на слюдующую страницу -->
+<li class="page-num"> 		<!-- Кнопка на следующую страницу -->
+	<a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+    </li>
+    </ul>
+    </div>
+    {% endif %}
+{% endblock content%}

@@ -1,0 +1,1 @@
+web: gunicorn sraping_sevice.wsgi
