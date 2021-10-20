@@ -16,7 +16,7 @@ def get_data_from_api(name):
 
     url = f'{API_URL}{name}/repos'
     r = req(url).json()
-    if r:
+    if r and type(r) == list:
         repo_lst =[]
         for repo in r:
             url_rm = f'https://raw.githubusercontent.com/{name}/{repo["name"]}/{repo["default_branch"]}/README.md'
@@ -29,4 +29,4 @@ def get_data_from_api(name):
         res_dict = {"name": name,
                         "repository":repo_lst }
         return res_dict
-    return None
+    return dict()
