@@ -6,6 +6,8 @@ def req (url):
     """ запрос к серверу API"""
     session = requests.Session()
     r = session.get(url)
+    if r.status_code == 400:
+        return None
     return r
 
 def get_data_from_api(name):
@@ -19,9 +21,9 @@ def get_data_from_api(name):
         for repo in r:
             url_rm = f'https://raw.githubusercontent.com/{name}/{repo["name"]}/{repo["default_branch"]}/README.md'
             readme = req(url_rm).text
-            d= {"repo": repo["name"],
-                "read_me": readme ,
-                "created": repo["created_at"]
+            d= {"repo": repo.get("name", None),
+                "read_me": readme,
+                "created": repo.get("created_at",)
                 }
             repo_lst.append(d)
         res_dict = {"name": name,
