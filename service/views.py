@@ -20,9 +20,9 @@ class RepoViews(ModelViewSet):
 class AddRepo(APIView):
 
     def get(self, request, format=None):
-        json = request.body
-        if json:
-            res = get_data_from_api(json.loads(request.body).get('name', None))
+        req_body = request.body
+        if req_body:
+            res = get_data_from_api(json.loads(req_body).get('name', None))
             if res:
                 serializer = UserSerialezr(data=res)
                 print()

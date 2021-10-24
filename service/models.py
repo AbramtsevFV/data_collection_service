@@ -2,7 +2,7 @@ from django.db import models
 
 
 class UserModels(models.Model):
-    name = models.CharField(verbose_name='Имя пользователя', max_length=256, unique=True)
+    name = models.CharField(verbose_name='Имя пользователя', max_length=256)
 
     def __str__(self):
         return self.name
